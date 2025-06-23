@@ -26,19 +26,34 @@ public class AirportsController(
     
     [HttpPut("{code}")]
     [ProducesResponseType(typeof(AirportDataTransferObject), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(AirportDataTransferObject), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponseActionResult))]
     public async Task<IActionResult> Put([FromRoute] string code, AirportDataTransferObject airportDto)
     {
-        var airport = await airportRepository.GetByIdAsync(code);
-        if (airport is null)
+        if (airportDto==null)
         {
-            return NotFound($"Airport with code {code} not found.");
+            return BadRequest("airport data must be provided");
         }
-
+        if (string.IsNullOrEmpty(airportDto.City) || string.IsNullOrEmpty(airportDto.Name) )        
+        {
+            return BadRequest("Airport city and name must be provided.");
+        }
+        var airport = await airportRepository.GetByIdAsync(code);
+        if (airport == null)
+        {
+            return NotFound($"Airport with code {code} not found");
+        }
         airport.City = airportDto.City;
         airport.Country = airportDto.Country;
         airport.Name = airportDto.Name;
-        var result = airportRepository.Update(airport);
-        return MapResultToDataTransferObject<Airport, AirportDataTransferObject>(result);
+
+         var result = airportRepository.Update(airport);
+
+        if (result == null)
+        {
+            return StatusCode.Status500InternalServerError);
+        }
+        return MapResultToDataTransferObject<Airport, AirportDataTransferObject>(result);       
+
     }
 }

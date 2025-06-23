@@ -20,10 +20,11 @@ namespace SecureFlight.Test
             //TODO: Add test code here
             //Act
             
-            
+
             //Assert
-            
+
             testingContext.DisposeDatabase();
+            return await Task.CompletedTask;
         }
     }
 }

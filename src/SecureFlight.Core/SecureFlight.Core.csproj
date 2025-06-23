@@ -5,4 +5,9 @@
     <LangVersion>12</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Passengers\Commands\Update\" />
+    <Folder Include="Passengers\Querys\" />
+  </ItemGroup>
+
 </Project>

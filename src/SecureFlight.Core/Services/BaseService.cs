@@ -26,4 +26,11 @@ public class BaseService<TEntity>(IRepository<TEntity> repository) : IService<TE
             OperationResult<TEntity>.NotFound($"Entity with key values {string.Join(", ", keyValues)} was not found") :
             OperationResult<TEntity>.Success(entity);
     }
+    public async Task<OperationResult<TEntity>> FindbyIdAsync(string code)
+    {
+        var entity = await repository.GetByIdAsync(code);
+        return entity is null ?
+            OperationResult<TEntity>.NotFound($"Entity with key values {string.Join(", ", code)} was not found") :
+            OperationResult<TEntity>.Success(entity);
+    }
 }

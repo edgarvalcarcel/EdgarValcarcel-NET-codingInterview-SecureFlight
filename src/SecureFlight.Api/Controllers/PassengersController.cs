@@ -4,6 +4,7 @@ using SecureFlight.Api.Models;
 using SecureFlight.Api.Utils;
 using SecureFlight.Core.Entities;
 using SecureFlight.Core.Interfaces;
+using SecureFlight.Core.Passengers.Commands.Create;
 
 namespace SecureFlight.Api.Controllers;
 
@@ -11,6 +12,7 @@ namespace SecureFlight.Api.Controllers;
 [Route("[controller]")]
 public class PassengersController(
     IService<Passenger> personService,
+    IRepository<Flight> flightRepository,
     IMapper mapper)
     : SecureFlightBaseController(mapper)
 {

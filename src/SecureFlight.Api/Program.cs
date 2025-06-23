@@ -36,7 +36,7 @@ if (app.Environment.IsDevelopment())
     {
         using (var context = scope.ServiceProvider.GetRequiredService<SecureFlightDbContext>())
         {
-            context.Database.EnsureCreated();
+           await context.Database.EnsureCreatedAsync();
         }
     }
     app.UseSwagger();
@@ -45,4 +45,4 @@ if (app.Environment.IsDevelopment())
 
 app.MapControllers();
 app.UseHttpsRedirection();
-app.Run();
+await app.RunAsync();
